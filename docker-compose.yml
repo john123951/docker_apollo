@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  apollo-configservice:
+    image: john123951/apollo:1.2.0-configservice
+    container_name: apollo-configservice
+    environment:
+      spring_datasource_url: jdbc:mysql://192.168.1.10:3306/ApolloConfigDB?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+      spring_datasource_username: root
+      spring_datasource_password: 123456
+    ports:
+      - "6080:8080"
+    volumes:
+      - /tmp/logs:/opt/logs
+      
+  apollo-adminservice:
+    image: john123951/apollo:1.2.0-adminservice
+    container_name: apollo-adminservice
+    environment:
+      spring_datasource_url: jdbc:mysql://192.168.1.10:3306/ApolloConfigDB?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+      spring_datasource_username: root
+      spring_datasource_password: 123456
+    volumes:
+      - /tmp/logs:/opt/logs
+      
+  apollo-portal:
+    image: john123951/apollo:1.2.0-portal
+    container_name: apollo-portal
+    environment:
+      DEV_META: http://192.168.1.12:6080
+      spring_datasource_url: jdbc:mysql://192.168.1.10:3306/ApolloPortalDB?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+      spring_datasource_username: root
+      spring_datasource_password: 123456
+    ports:
+      - "8070:8070"
+    volumes:
+      - /tmp/logs:/opt/logs
